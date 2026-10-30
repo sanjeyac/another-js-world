@@ -33,5 +33,6 @@
   "aria.pad": "Richtingen",
   "aria.action": "Actie",
   "aria.pause": "Pauze",
-  "setup.notStored": "De bestanden konden niet op dit apparaat worden bewaard (privénavigatie of opslag vol?). Je kunt nu spelen, maar moet de zip de volgende keer opnieuw kiezen."
+  "setup.notStored": "De bestanden konden niet op dit apparaat worden bewaard (privénavigatie of opslag vol?). Je kunt nu spelen, maar moet de zip de volgende keer opnieuw kiezen.",
+  "start.version": "versie {sha}"
 }

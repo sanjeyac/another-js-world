@@ -2,6 +2,7 @@
 //   node tools/build.mjs
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
 const dist = path.join(root, 'dist');
@@ -12,8 +13,17 @@ fs.mkdirSync(dist);
 for (const item of INCLUDE) fs.cpSync(path.join(root, item), path.join(dist, item), { recursive: true });
 fs.writeFileSync(path.join(dist, '.nojekyll'), '');
 
+const gitSha = () => {
+  try { return execSync('git rev-parse HEAD', { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { return ''; }
+};
+const sha = process.env.GITHUB_SHA || gitSha();
+
+// Shown on the start screen: first 6 characters of the commit this build comes from.
+const indexPath = path.join(dist, 'index.html');
+fs.writeFileSync(indexPath, fs.readFileSync(indexPath, 'utf8').replace('name="app-version" content="dev"', `name="app-version" content="${(sha || 'dev').slice(0, 6)}"`));
+
 // New cache name on every build so installed copies pick up the update.
-const version = (process.env.GITHUB_SHA || Date.now().toString(36)).slice(0, 8);
+const version = (sha || Date.now().toString(36)).slice(0, 8);
 const swPath = path.join(dist, 'sw.js');
 fs.writeFileSync(swPath, fs.readFileSync(swPath, 'utf8').replace(/another-world-v\w+/, `another-world-${version}`));
 

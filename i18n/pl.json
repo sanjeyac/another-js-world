@@ -33,5 +33,6 @@
   "aria.pad": "Kierunki",
   "aria.action": "Akcja",
   "aria.pause": "Pauza",
-  "setup.notStored": "Nie udało się zachować plików na tym urządzeniu (tryb prywatny lub brak miejsca?). Możesz teraz grać, ale następnym razem trzeba będzie ponownie wybrać plik zip."
+  "setup.notStored": "Nie udało się zachować plików na tym urządzeniu (tryb prywatny lub brak miejsca?). Możesz teraz grać, ale następnym razem trzeba będzie ponownie wybrać plik zip.",
+  "start.version": "wersja {sha}"
 }

@@ -362,6 +362,10 @@ async function toggleFullscreen() {
   } catch { /* not supported (e.g. iPhone Safari) */ }
 }
 
+const APP_VERSION = document.querySelector('meta[name=app-version]')?.content || 'dev';
+const updateVersionLabel = () => { $('version').textContent = t('start.version', { sha: APP_VERSION }); };
+document.addEventListener('languagechange', updateVersionLabel);
+
 const updateMuteLabel = () => { $('mute-state').textContent = t(muted ? 'menu.off' : 'menu.on'); };
 
 // Language selector: one entry per language listed in i18n/languages.json

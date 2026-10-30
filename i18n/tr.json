@@ -33,5 +33,6 @@
   "aria.pad": "Yönler",
   "aria.action": "Eylem",
   "aria.pause": "Duraklat",
-  "setup.notStored": "Dosyalar bu cihaza kaydedilemedi (gizli mod veya depolama dolu?). Şimdi oynayabilirsiniz ama bir dahaki sefere zip dosyasını yeniden seçmeniz gerekir."
+  "setup.notStored": "Dosyalar bu cihaza kaydedilemedi (gizli mod veya depolama dolu?). Şimdi oynayabilirsiniz ama bir dahaki sefere zip dosyasını yeniden seçmeniz gerekir.",
+  "start.version": "sürüm {sha}"
 }

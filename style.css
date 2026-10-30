@@ -92,6 +92,7 @@ html:lang(ru), html:lang(ja), html:lang(ko), html:lang(zh) { font-family: system
 .overlay.splash .card { position: relative; margin-bottom: max(8px, env(safe-area-inset-bottom)); }
 .card.panel { background: rgba(5, 8, 20, .88); padding: 14px; box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); }
 .overlay.splash .hint { text-shadow: 0 2px 0 #000; opacity: 1; }
+.hint.version { font-size: 16px; opacity: .6; }
 @media (orientation: portrait) {
   .overlay.splash { background-size: 100% auto; background-position: top center; align-items: flex-end; }
 }
@@ -103,7 +104,9 @@ html:lang(ru), html:lang(ja), html:lang(ko), html:lang(zh) { font-family: system
   .overlay.splash .card p { font-size: 17px; line-height: 1.2; flex: 1; }
   .overlay.splash .card > .btn { flex: 0 0 38%; }
   .overlay.splash .card .split { flex: 1; }
-  .overlay.splash .card .hint { display: none; }
+  .overlay.splash .card { flex-wrap: wrap; }
+  .overlay.splash .card .hint:not(.version) { display: none; }
+  .overlay.splash .card .version { flex: 0 0 100%; }
 }
 
 /* Short screens (landscape phones): lay the menu out in two columns */
