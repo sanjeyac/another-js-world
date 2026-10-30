@@ -15,7 +15,7 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
 
 #screen { position: relative; flex: 0 0 auto; width: 100%; aspect-ratio: 16 / 10; max-height: 100%; margin: 0 auto; }
 #canvas { width: 100%; height: 100%; display: block; background: #000; image-rendering: pixelated; object-fit: contain; }
-.chip { position: absolute; top: 6px; right: 6px; width: 40px; height: 40px; padding: 0; border: 0; opacity: .92; transition: transform .04s;
+.chip { z-index: 3; position: absolute; top: 6px; right: 6px; width: 40px; height: 40px; padding: 0; border: 0; opacity: .92; transition: transform .04s;
   background: url("kenney/input/c_menu.png") center / 100% 100% no-repeat; image-rendering: pixelated; font-size: 0; }
 
 #controls { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: space-around; min-height: 0; }
@@ -26,9 +26,11 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
 #pad img { width: var(--btn); height: var(--btn); image-rendering: pixelated; opacity: .92; pointer-events: none; transition: transform .04s; }
 #pad .up { grid-area: 1 / 2; } #pad .left { grid-area: 2 / 1; } #pad .right { grid-area: 2 / 3; } #pad .down { grid-area: 3 / 2; }
 #pad.up img.up, #pad.down img.down, #pad.left img.left, #pad.right img.right { opacity: 1; transform: scale(.88); }
-#action { width: var(--btn); height: var(--btn); padding: 0; border: 0; opacity: .92; touch-action: none;
-  background: url("kenney/input/c_button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; }
-#action.down { opacity: 1; transform: scale(.88); }
+/* The element is the touch target; the sprite is its ::after so the target can be much bigger than the drawing */
+#action { position: relative; width: var(--btn); height: var(--btn); padding: 0; border: 0; background: none; touch-action: none; }
+#action::after { content: ""; position: absolute; width: var(--btn); height: var(--btn); left: 50%; top: 0; transform: translateX(-50%);
+  background: url("kenney/input/c_button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; opacity: .92; transition: transform .04s; }
+#action.down::after { transform: translateX(-50%) scale(.88); opacity: 1; }
 @media (orientation: portrait) { :root { --btn: 64px; } }
 
 #pause-btn { right: auto; left: 6px; background-image: url("kenney/input/c_pause.png"); }
@@ -49,7 +51,9 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
     height: min(80vh, calc((100vw - 2 * (3.3 * var(--btn) + 8px)) / 1.6)); }
   /* Controls in the lower part of the bands, centred in them */
   #app.touch #pad { grid-area: pad; justify-self: center; align-self: start; margin-top: calc(72vh - 1.5 * var(--btn)); }
-  #app.touch #action { grid-area: action; justify-self: center; align-self: start; margin-top: calc(74vh - .5 * var(--btn)); }
+  /* The whole right band is the A button, so no precision is needed: only the sprite is drawn small */
+  #app.touch #action { grid-area: action; justify-self: stretch; align-self: stretch; width: auto; height: auto; }
+  #app.touch #action::after { top: calc(74vh - .5 * var(--btn)); }
   #app.touch #menu-btn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
   #app.touch #pause-btn { top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); }
 }
