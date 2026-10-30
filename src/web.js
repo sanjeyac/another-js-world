@@ -253,7 +253,7 @@ const KEY_DIRS = {
   ArrowLeft: DIR_LEFT, ArrowRight: DIR_RIGHT, ArrowUp: DIR_UP, ArrowDown: DIR_DOWN,
   KeyA: DIR_LEFT, KeyD: DIR_RIGHT, KeyW: DIR_UP, KeyS: DIR_DOWN,
 };
-const KEY_BUTTONS = new Set(['Space', 'Enter', 'NumpadEnter', 'KeyZ', 'KeyX', 'ControlLeft', 'ShiftLeft']);
+const KEY_BUTTONS = new Set(['Space']); // Shift and the other modifiers stay free for shortcuts
 
 window.addEventListener('keydown', (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -271,6 +271,11 @@ window.addEventListener('keydown', (e) => {
   const dir = KEY_DIRS[e.code];
   if (dir) { kbMask |= dir; e.preventDefault(); }
   else if (KEY_BUTTONS.has(e.code)) { kbButton = true; e.preventDefault(); }
+  else if (/^(Digit|Numpad)[1-3]$/.test(e.code)) { // Shift+1..3 save to that slot, 1..3 load it
+    const slot = Number(e.code.slice(-1));
+    if (e.shiftKey) startSave(slot); else startLoad(slot);
+    e.preventDefault();
+  }
   else if (e.code === 'F5') { startSave(saveSlot || 1); e.preventDefault(); }
   else if (e.code === 'F9') { startLoad(saveSlot || 1); e.preventDefault(); }
 });

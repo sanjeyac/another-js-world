@@ -62,10 +62,10 @@ Everything else in the original folder (`another.exe`, `config.*`, `intro.exe`, 
 - **Touch**: virtual pad on the left (up = jump, down = crouch), action button on the right (run / fire / kick).
   The ☰ button opens the menu (save/load slots, password entry, fullscreen, mute).
   Landscape is recommended. On iOS/Android use "Add to Home Screen" to install it as a fullscreen app.
-- **Keyboard**: arrows or WASD to move, Space / Enter / Z / X for the action button, Esc or P for the menu,
-  F5 / F9 quick save / load.
+- **Keyboard**: arrows or WASD to move, Space for the action button, Esc or P for the menu,
+  Shift+1/2/3 save to slot 1/2/3, 1/2/3 load it (F5 / F9: quick save / load of the current slot).
 - **Gamepad**: d-pad or left stick, any face button for the action button.
-- **Password screen**: menu → *Inserisci codice*. Type the 4 letters, confirm with Enter or the action button.
+- **Password screen**: menu → *Inserisci codice*. Type the 4 letters, confirm with Space (the action button).
   The copy-protection code wheel is skipped.
 
 ## Run locally
