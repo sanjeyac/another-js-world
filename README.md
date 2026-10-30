@@ -6,7 +6,7 @@
 
 ## Why this exists
 
-I recently went to **Codemotion** and sat in on a talk by **Francesco Sciutti** that walked through how the
+I recently went to **Codemotion** and sat in on a talk by **Francesco Sciuti** that walked through how the
 virtual machine behind *Another World* actually works. That game was a big part of my childhood, and somewhere
 between the slides on bytecode and polygons one thought took over: *I want to play this again, on my phone.*
 
