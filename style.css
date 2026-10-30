@@ -32,6 +32,8 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
   background: url("kenney/input/c_button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; opacity: .92; transition: transform .04s; }
 #action.down::after { transform: translateX(-50%) scale(.88); opacity: 1; }
 @media (orientation: portrait) { :root { --btn: 64px; } }
+/* In portrait the buttons sit just below the picture so they never cover the game */
+@media (orientation: portrait) { .chip { top: calc(100% + 6px); } }
 
 #pause-btn { right: auto; left: 6px; background-image: url("kenney/input/c_pause.png"); }
 /* while the game is paused the button looks pressed (there is no separate play sprite) */
@@ -98,7 +100,7 @@ html:lang(ru), html:lang(ja), html:lang(ko), html:lang(zh) { font-family: system
 .overlay.splash .hint { text-shadow: 0 2px 0 #000; opacity: 1; }
 .hint.version { font-size: 16px; opacity: .6; }
 @media (orientation: portrait) {
-  .overlay.splash { background-size: 100% auto; background-position: top center; align-items: flex-end; }
+  .overlay.splash { background-size: 100% auto; background-position: center 33%; align-items: flex-end; }
 }
 
 @media (orientation: landscape) and (max-height: 520px) {
