@@ -55,8 +55,10 @@ automatically and the folder content is git-ignored. Without them the game asks 
 
 ## Publish on GitHub Pages
 
-Push to `main` and enable **Settings → Pages → Source: GitHub Actions** (a workflow is included),
-or serve the branch root directly. The game data is git-ignored, so players always bring their own files.
+Push to `main` and enable **Settings → Pages → Source: GitHub Actions**. The included workflow runs
+`node tools/build.mjs`, which copies only what the browser needs into `dist/` (no tools, docs or game data; it fails if
+game files end up there) and publishes that folder. You can run the build locally too and serve `dist/`.
+The game data is git-ignored, so players always bring their own files.
 
 ## Translations
 

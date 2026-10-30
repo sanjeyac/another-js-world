@@ -4,3 +4,4 @@ game/*
 dos/
 data/
 node_modules/
+dist/
