@@ -5,6 +5,7 @@
   "setup.saving": "Salvando no dispositivo…",
   "setup.missing": "Faltam {count} arquivos: {files}",
   "start.play": "Toque para jogar",
+  "start.continue": "Continuar (slot {slot})",
   "start.fullscreen": "Tela cheia",
   "start.hint": "Recomendado na horizontal",
   "menu.title": "Pausa",

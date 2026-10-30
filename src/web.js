@@ -148,17 +148,25 @@ function startAudio() {
 function newEngine() {
   const e = new Engine(sys, (name) => files.get(name), audio ? audio.ctx.sampleRate : 22050);
   e.saveHandler = async (snap) => {
-    try { await store.putSave(saveSlot, snap); toast(t('toast.saved', { slot: saveSlot })); }
+    try { await store.putSave(saveSlot, snap); rememberSlot(saveSlot); toast(t('toast.saved', { slot: saveSlot })); }
     catch { toast(t('toast.saveFailed')); }
   };
   e.init();
   return e;
 }
 
-function startGame() {
+const LAST_SLOT_KEY = 'another-world-last-slot';
+const lastSlot = () => Number(localStorage.getItem(LAST_SLOT_KEY)) || 0;
+const rememberSlot = (slot) => { try { localStorage.setItem(LAST_SLOT_KEY, String(slot)); } catch { /* private mode */ } };
+
+function startGame(slot = 0) {
   show('start', false);
   if (!audio) startAudio();
   engine = newEngine();
+  if (slot) {
+    saveSlot = slot;
+    store.getSave(slot).then((snap) => { if (snap && engine) engine.pendingLoad = snap; });
+  }
   input.dirMask = 0; input.button = false; input.lastChar = 0;
   resume();
   requestAnimationFrame(loop);
@@ -381,6 +389,13 @@ document.addEventListener('languagechange', updateMuteLabel);
 if (!document.documentElement.requestFullscreen) for (const b of document.querySelectorAll('[data-act=fullscreen]')) b.hidden = true;
 $('start-fs').addEventListener('click', toggleFullscreen);
 
+let forgetTimer = 0;
+function disarmForget() {
+  const b = document.querySelector('[data-act=forget]');
+  b.classList.remove('armed');
+  b.textContent = t('menu.forget');
+}
+
 $('menu').addEventListener('click', async (e) => {
   const btn = e.target.closest('[data-act]');
   if (!btn) return;
@@ -406,14 +421,21 @@ $('menu').addEventListener('click', async (e) => {
       resume();
       break;
     case 'forget':
-      if (confirm(t('confirm.forget'))) {
-        await store.clearFiles();
-        location.reload();
+      // Two taps instead of confirm(): mobile browsers can suppress native dialogs
+      if (!btn.classList.contains('armed')) {
+        btn.classList.add('armed');
+        btn.textContent = t('confirm.forget');
+        clearTimeout(forgetTimer);
+        forgetTimer = setTimeout(disarmForget, 4000);
+        break;
       }
+      try { await store.clearFiles(); } catch (err) { console.warn('clear failed', err); }
+      location.reload();
       break;
   }
 });
-$('start-btn').addEventListener('click', startGame);
+$('start-btn').addEventListener('click', () => startGame());
+$('continue-btn').addEventListener('click', () => startGame(lastSlot()));
 
 // ---------------------------------------------------------------- boot
 (async function boot() {
@@ -423,9 +445,26 @@ $('start-btn').addEventListener('click', startGame);
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
   try {
-    files = await loadStoredFiles() || await loadServerFiles();
+    files = await loadStoredFiles();
+    if (!files) {
+      files = await loadServerFiles();
+      // files served next to the page (game/) cannot be removed from here
+      if (files) document.querySelector('[data-act=forget]').hidden = true;
+    }
   } catch (err) {
     console.warn('data lookup failed', err);
   }
-  if (files) { show('setup', false); show('start', true); keepStorage(); }
+  if (!files) { show('boot', false); show('setup', true); return; }
+  keepStorage();
+  try {
+    const slot = lastSlot();
+    if (slot && await store.getSave(slot)) {
+      const label = () => { $('continue-btn').textContent = t('start.continue', { slot }); };
+      label();
+      document.addEventListener('languagechange', label);
+      show('continue-btn', true);
+    }
+  } catch { /* no saves available */ }
+  show('boot', false);
+  show('start', true);
 }());

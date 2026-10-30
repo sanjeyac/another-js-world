@@ -5,6 +5,7 @@
   "setup.saving": "Enregistrement sur l'appareil…",
   "setup.missing": "{count} fichiers manquants : {files}",
   "start.play": "Touchez pour jouer",
+  "start.continue": "Continuer (emplacement {slot})",
   "start.fullscreen": "Plein écran",
   "start.hint": "Mode paysage recommandé",
   "menu.title": "Pause",

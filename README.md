@@ -32,6 +32,31 @@ touch controls for phones and tablets, keyboard and gamepad on desktop. No build
 >   your browser's IndexedDB and never uploaded; or
 > - **download the project and run it** (`./run.sh`, or any static server), putting the files in `game/`.
 
+### Files the game needs
+
+These 14 files are in the folder of the original DOS release (the one with `another.exe`). Put exactly these in the
+zip (in the root or in any folder); names are lowercase and have no extension except `memlist.bin`:
+
+| File | Size (bytes) in the DOS release |
+| --- | --- |
+| `memlist.bin` | 2,940 |
+| `bank01` | 209,250 |
+| `bank02` | 77,608 |
+| `bank03` | 95,348 |
+| `bank04` | 58,524 |
+| `bank05` | 15,100 |
+| `bank06` | 44,034 |
+| `bank07` | 98,528 |
+| `bank08` | 123,656 |
+| `bank09` | 7,396 |
+| `bank0a` | 200,120 |
+| `bank0b` | 46,296 |
+| `bank0c` | 18,864 |
+| `bank0d` | 157,396 |
+
+Everything else in the original folder (`another.exe`, `config.*`, `intro.exe`, `logo`, `music`, `readme.txt`,
+`tabvol.bin`, `vol.*`) is not used. If a file is missing, the page tells you which ones.
+
 ## Playing
 
 - **Touch**: virtual pad on the left (up = jump, down = crouch), action button on the right (run / fire / kick).

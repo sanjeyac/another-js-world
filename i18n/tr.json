@@ -5,6 +5,7 @@
   "setup.saving": "Cihaza kaydediliyor…",
   "setup.missing": "{count} dosya eksik: {files}",
   "start.play": "Oynamak için dokun",
+  "start.continue": "Devam et (slot {slot})",
   "start.fullscreen": "Tam ekran",
   "start.hint": "Yatay mod önerilir",
   "menu.title": "Duraklatıldı",

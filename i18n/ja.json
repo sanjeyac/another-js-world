@@ -5,6 +5,7 @@
   "setup.saving": "端末に保存中…",
   "setup.missing": "{count}個のファイルが不足しています：{files}",
   "start.play": "タップしてプレイ",
+  "start.continue": "続ける（スロット{slot}）",
   "start.fullscreen": "全画面",
   "start.hint": "横向きを推奨",
   "menu.title": "一時停止",

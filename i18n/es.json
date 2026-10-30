@@ -5,6 +5,7 @@
   "setup.saving": "Guardando en el dispositivo…",
   "setup.missing": "Faltan {count} archivos: {files}",
   "start.play": "Toca para jugar",
+  "start.continue": "Continuar (ranura {slot})",
   "start.fullscreen": "Pantalla completa",
   "start.hint": "Se recomienda horizontal",
   "menu.title": "Pausa",

@@ -5,6 +5,7 @@
   "setup.saving": "Zapisywanie na urządzeniu…",
   "setup.missing": "Brakuje plików ({count}): {files}",
   "start.play": "Dotknij, aby zagrać",
+  "start.continue": "Kontynuuj (slot {slot})",
   "start.fullscreen": "Pełny ekran",
   "start.hint": "Zalecany tryb poziomy",
   "menu.title": "Pauza",

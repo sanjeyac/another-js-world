@@ -5,6 +5,7 @@
   "setup.saving": "Saving to this device…",
   "setup.missing": "{count} files missing: {files}",
   "start.play": "Tap to play",
+  "start.continue": "Continue (slot {slot})",
   "start.fullscreen": "Fullscreen",
   "start.hint": "Landscape recommended",
   "menu.title": "Paused",

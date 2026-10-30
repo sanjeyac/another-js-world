@@ -84,6 +84,7 @@ code { background: #26335a; padding: 0 6px; font: inherit; }
   box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); color: #fff; opacity: 0; pointer-events: none; transition: .2s; z-index: 20; }
 #toast.on { opacity: 1; transform: translate(-50%, 0); }
 
+.buttons { display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto; }
 .split { display: flex; gap: 12px; } .split .btn { flex: 1 1 0; }
 select.btn { appearance: none; -webkit-appearance: none; text-align-last: center; }
 select.btn option { background: #111a33; color: #fff; }
@@ -97,6 +98,8 @@ html:lang(ru), html:lang(ja), html:lang(ko), html:lang(zh) { font-family: system
 .overlay.splash::before { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.8)); pointer-events: none; }
 .overlay.splash .card { position: relative; margin-bottom: max(8px, env(safe-area-inset-bottom)); }
 .card.panel { background: rgba(5, 8, 20, .88); padding: 14px; box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.overlay.splash:not([hidden]) .card { animation: fade-in .6s ease-out both; }
 .overlay.splash .hint { text-shadow: 0 2px 0 #000; opacity: 1; }
 .hint.version { font-size: 16px; opacity: .6; }
 @media (orientation: portrait) {

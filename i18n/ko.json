@@ -5,6 +5,7 @@
   "setup.saving": "기기에 저장하는 중…",
   "setup.missing": "파일 {count}개 없음: {files}",
   "start.play": "터치하여 플레이",
+  "start.continue": "계속하기 (슬롯 {slot})",
   "start.fullscreen": "전체 화면",
   "start.hint": "가로 모드 권장",
   "menu.title": "일시정지",

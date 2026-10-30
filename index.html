@@ -32,7 +32,10 @@
     </div>
 
     <!-- First run: pick the original game files -->
-    <section id="setup" class="overlay splash">
+    <!-- Shown first, while the game files and saves are looked up; the cards below fade in once that is done -->
+    <section id="boot" class="overlay splash"></section>
+
+    <section id="setup" class="overlay splash" hidden>
       <div class="card panel">
         <p id="setup-msg" data-i18n-html="setup.text">This project does not include the game files. Select a <code>.zip</code>
           with the data of your original copy (DOS version): <code>memlist.bin</code> and <code>bank01</code> … <code>bank0d</code>.
@@ -46,9 +49,12 @@
     <!-- Needed to start audio on mobile -->
     <section id="start" class="overlay splash" hidden>
       <div class="card">
-        <div class="split">
-          <button id="start-btn" class="btn primary" data-i18n="start.play">Tap to play</button>
-          <button id="start-fs" class="btn" data-act="fullscreen" data-i18n="start.fullscreen">Fullscreen</button>
+        <div class="buttons">
+          <button id="continue-btn" class="btn primary" hidden></button>
+          <div class="split">
+            <button id="start-btn" class="btn primary" data-i18n="start.play">Tap to play</button>
+            <button id="start-fs" class="btn" data-act="fullscreen" data-i18n="start.fullscreen">Fullscreen</button>
+          </div>
         </div>
         <p class="hint" data-i18n="start.hint">Landscape recommended</p>
         <p class="hint version" id="version"></p>

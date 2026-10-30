@@ -5,6 +5,7 @@
   "setup.saving": "Wird auf dem Gerät gespeichert…",
   "setup.missing": "{count} Dateien fehlen: {files}",
   "start.play": "Zum Spielen tippen",
+  "start.continue": "Weiter (Slot {slot})",
   "start.fullscreen": "Vollbild",
   "start.hint": "Querformat empfohlen",
   "menu.title": "Pause",

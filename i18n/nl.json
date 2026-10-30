@@ -5,6 +5,7 @@
   "setup.saving": "Opslaan op dit apparaat…",
   "setup.missing": "{count} bestanden ontbreken: {files}",
   "start.play": "Tik om te spelen",
+  "start.continue": "Doorgaan (slot {slot})",
   "start.fullscreen": "Volledig scherm",
   "start.hint": "Liggend aanbevolen",
   "menu.title": "Pauze",

@@ -5,6 +5,7 @@
   "setup.saving": "Salvataggio sul dispositivo…",
   "setup.missing": "Mancano {count} file: {files}",
   "start.play": "Tocca per giocare",
+  "start.continue": "Continua (slot {slot})",
   "start.fullscreen": "Schermo intero",
   "start.hint": "Consigliato in orizzontale",
   "menu.title": "Pausa",

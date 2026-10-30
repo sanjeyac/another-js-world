@@ -5,6 +5,7 @@
   "setup.saving": "Сохранение на устройстве…",
   "setup.missing": "Не хватает файлов ({count}): {files}",
   "start.play": "Нажмите, чтобы играть",
+  "start.continue": "Продолжить (слот {slot})",
   "start.fullscreen": "Во весь экран",
   "start.hint": "Лучше в горизонтальной ориентации",
   "menu.title": "Пауза",

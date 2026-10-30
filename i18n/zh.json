@@ -5,6 +5,7 @@
   "setup.saving": "正在保存到本设备…",
   "setup.missing": "缺少 {count} 个文件：{files}",
   "start.play": "点击开始游戏",
+  "start.continue": "继续（存档{slot}）",
   "start.fullscreen": "全屏",
   "start.hint": "建议横屏",
   "menu.title": "已暂停",
