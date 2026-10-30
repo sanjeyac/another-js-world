@@ -32,5 +32,6 @@
   "aria.menu": "Menu",
   "aria.pad": "Directions",
   "aria.action": "Action",
-  "aria.pause": "Pause"
+  "aria.pause": "Pause",
+  "setup.notStored": "Couldn't keep the files on this device (private browsing or storage full?). You can play now, but you'll need to select the zip again next time."
 }

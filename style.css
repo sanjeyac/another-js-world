@@ -15,25 +15,25 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
 
 #screen { position: relative; flex: 0 0 auto; width: 100%; aspect-ratio: 16 / 10; max-height: 100%; margin: 0 auto; }
 #canvas { width: 100%; height: 100%; display: block; background: #000; image-rendering: pixelated; object-fit: contain; }
-.chip { position: absolute; top: 6px; right: 6px; width: 48px; height: 48px; padding: 0; border: 0; opacity: .7;
-  background: url("kenney/input/menu.png") center / 100% 100% no-repeat; image-rendering: pixelated; font-size: 0; }
+.chip { position: absolute; top: 6px; right: 6px; width: 40px; height: 40px; padding: 0; border: 0; opacity: .92; transition: transform .04s;
+  background: url("kenney/input/c_menu.png") center / 100% 100% no-repeat; image-rendering: pixelated; font-size: 0; }
 
 #controls { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: space-around; min-height: 0; }
-.sprite { image-rendering: pixelated; }
-#pad { position: relative; width: min(46vw, 210px); width: round(down, min(46vw, 210px), 16px); aspect-ratio: 1; touch-action: none;
-  opacity: .85; }
-#pad img { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; pointer-events: none; }
-#pad img.lit { display: none; }
-/* a pressed direction fills its half of the cross arm */
-#pad .lit.up { clip-path: inset(0 31% 50% 31%); } #pad .lit.down { clip-path: inset(50% 31% 0 31%); }
-#pad .lit.left { clip-path: inset(31% 50% 31% 0); } #pad .lit.right { clip-path: inset(31% 0 31% 50%); }
-#pad.up .lit.up, #pad.down .lit.down, #pad.left .lit.left, #pad.right .lit.right { display: block; }
-#action { width: min(30vw, 130px); width: round(down, min(30vw, 130px), 16px); aspect-ratio: 1; padding: 0; border: 0;
-  background: url("kenney/input/button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; touch-action: none; opacity: .85; }
-#action.down { background-image: url("kenney/input/button-a-pressed.png"); }
+/* On-screen controls: four separate d-pad buttons and the action button, 16 px sprites drawn at --btn (40 px) */
+:root { --btn: 40px; }
+#pad { display: grid; grid-template-columns: repeat(3, var(--btn)); grid-template-rows: repeat(3, var(--btn));
+  column-gap: calc(var(--btn) * .15); touch-action: none; }
+#pad img { width: var(--btn); height: var(--btn); image-rendering: pixelated; opacity: .92; pointer-events: none; transition: transform .04s; }
+#pad .up { grid-area: 1 / 2; } #pad .left { grid-area: 2 / 1; } #pad .right { grid-area: 2 / 3; } #pad .down { grid-area: 3 / 2; }
+#pad.up img.up, #pad.down img.down, #pad.left img.left, #pad.right img.right { opacity: 1; transform: scale(.88); }
+#action { width: var(--btn); height: var(--btn); padding: 0; border: 0; opacity: .92; touch-action: none;
+  background: url("kenney/input/c_button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; }
+#action.down { opacity: 1; transform: scale(.88); }
+@media (orientation: portrait) { :root { --btn: 64px; } }
 
-#pause-btn { right: auto; left: 6px; background-image: url("kenney/input/pause.png"); }
-#pause-btn.on { background-image: url("kenney/input/play.png"); opacity: 1; }
+#pause-btn { right: auto; left: 6px; background-image: url("kenney/input/c_pause.png"); }
+/* while the game is paused the button looks pressed (there is no separate play sprite) */
+#pause-btn.on { transform: scale(.88); }
 .panel-label { position: absolute; left: 50%; top: 14%; transform: translateX(-50%); z-index: 5; padding: 6px 22px; background: var(--panel);
   box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); text-transform: uppercase; letter-spacing: .1em; pointer-events: none; }
 
@@ -42,9 +42,14 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
   #app.touch { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "pad screen action";
     align-items: center; }
   #app.touch #controls { display: contents; }
-  #app.touch #screen { grid-area: screen; height: 100%; width: auto; aspect-ratio: 16 / 10; max-width: 100%; position: static; }
-  #app.touch #pad { grid-area: pad; justify-self: center; width: clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh); width: round(down, clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh), 16px); }
-  #app.touch #action { grid-area: action; justify-self: center; width: clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh); width: round(down, clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh), 16px); }
+  /* The screen takes 80% of the height like in the reference mock-up, which leaves bands wide enough for 40 px buttons;
+     on narrow phones the buttons shrink (down to 26 px) before the screen does. */
+  #app.touch { --btn: clamp(26px, calc(((100vw - 128vh) / 2 - 8px) / 3.3), 40px); grid-template-rows: 100%; }
+  #app.touch #screen { grid-area: screen; aspect-ratio: 16 / 10; position: static; width: auto;
+    height: min(80vh, calc((100vw - 2 * (3.3 * var(--btn) + 8px)) / 1.6)); }
+  /* Controls in the lower part of the bands, centred in them */
+  #app.touch #pad { grid-area: pad; justify-self: center; align-self: start; margin-top: calc(72vh - 1.5 * var(--btn)); }
+  #app.touch #action { grid-area: action; justify-self: center; align-self: start; margin-top: calc(74vh - .5 * var(--btn)); }
   #app.touch #menu-btn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
   #app.touch #pause-btn { top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); }
 }

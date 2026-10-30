@@ -32,5 +32,6 @@
   "aria.menu": "Menü",
   "aria.pad": "Richtungen",
   "aria.action": "Aktion",
-  "aria.pause": "Pause"
+  "aria.pause": "Pause",
+  "setup.notStored": "Die Dateien konnten nicht auf diesem Gerät gespeichert werden (privater Modus oder Speicher voll?). Du kannst jetzt spielen, musst die ZIP-Datei beim nächsten Mal aber erneut auswählen."
 }

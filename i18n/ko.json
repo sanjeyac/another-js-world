@@ -32,5 +32,6 @@
   "aria.menu": "메뉴",
   "aria.pad": "방향",
   "aria.action": "동작",
-  "aria.pause": "일시정지"
+  "aria.pause": "일시정지",
+  "setup.notStored": "이 기기에 파일을 보관하지 못했습니다(시크릿 모드이거나 저장 공간이 부족한가요?). 지금은 플레이할 수 있지만 다음에는 zip을 다시 선택해야 합니다."
 }

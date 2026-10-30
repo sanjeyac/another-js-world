@@ -32,5 +32,6 @@
   "aria.menu": "菜单",
   "aria.pad": "方向",
   "aria.action": "动作",
-  "aria.pause": "暂停"
+  "aria.pause": "暂停",
+  "setup.notStored": "无法将文件保存在此设备上（隐私模式或存储空间已满？）。现在可以玩，但下次需要重新选择 zip。"
 }

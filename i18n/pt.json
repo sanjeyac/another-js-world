@@ -32,5 +32,6 @@
   "aria.menu": "Menu",
   "aria.pad": "Direções",
   "aria.action": "Ação",
-  "aria.pause": "Pausa"
+  "aria.pause": "Pausa",
+  "setup.notStored": "Não foi possível guardar os arquivos neste dispositivo (navegação privada ou armazenamento cheio?). Você pode jogar agora, mas na próxima vez precisará selecionar o zip de novo."
 }

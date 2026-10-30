@@ -82,6 +82,11 @@ async function loadServerFiles() {
   return null;
 }
 
+/** Ask the browser not to evict the saved game files when it is short on space. */
+function keepStorage() {
+  navigator.storage?.persist?.().catch(() => {});
+}
+
 async function ingestFiles(fileList) {
   const map = new Map();
   try {
@@ -104,11 +109,19 @@ async function ingestFiles(fileList) {
     return;
   }
   setupStatus(t('setup.saving'));
-  for (const [name, data] of map) await store.putFile(name, data);
+  let stored = true;
+  try {
+    for (const [name, data] of map) await store.putFile(name, data);
+  } catch (err) {
+    console.warn('could not store game files', err);
+    stored = false;
+  }
   files = map;
   setupStatus('');
   show('setup', false);
   show('start', true);
+  if (stored) keepStorage();
+  else toast(t('setup.notStored'), 8000);
 }
 
 $('file-input').addEventListener('change', (e) => ingestFiles(e.target.files));
@@ -315,7 +328,7 @@ else $('app').classList.add('desktop');
 
 // ---------------------------------------------------------------- menu
 let toastTimer = 0;
-function toast(msg) {
+function toast(msg, ms = 1800) {
   let t = document.getElementById('toast');
   if (!t) {
     t = document.createElement('div');
@@ -325,7 +338,7 @@ function toast(msg) {
   t.textContent = msg;
   t.classList.add('on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('on'), 1800);
+  toastTimer = setTimeout(() => t.classList.remove('on'), ms);
 }
 
 function startSave(slot) {
@@ -410,5 +423,5 @@ $('start-btn').addEventListener('click', startGame);
   } catch (err) {
     console.warn('data lookup failed', err);
   }
-  if (files) { show('setup', false); show('start', true); }
+  if (files) { show('setup', false); show('start', true); keepStorage(); }
 }());
