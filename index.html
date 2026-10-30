@@ -24,10 +24,12 @@
     <div id="pause-label" class="panel-label" hidden data-i18n="menu.title">Paused</div>
 
     <div id="controls" hidden>
-      <!-- Landscape: #pad is the whole left band and .dpad (the stick sprite) follows the thumb. Portrait: fixed .arrows -->
+      <!-- Landscape: #pad is the whole left band and .grid is a 3×3 touch grid (8 directions). Portrait: fixed .arrows -->
       <div id="pad" aria-label="Directions" data-i18n-aria="aria.pad">
-        <div class="dpad">
-          <img class="knob" src="kenney/input/c_stick.png" alt="">
+        <div class="grid">
+          <i><img src="kenney/input/c_up.png" alt="" style="--rot:-45deg"></i><i><img src="kenney/input/c_up.png" alt="" style="--rot:0deg"></i><i><img src="kenney/input/c_up.png" alt="" style="--rot:45deg"></i>
+          <i><img src="kenney/input/c_left.png" alt=""></i><i></i><i><img src="kenney/input/c_right.png" alt=""></i>
+          <i><img src="kenney/input/c_down.png" alt="" style="--rot:45deg"></i><i><img src="kenney/input/c_down.png" alt=""></i><i><img src="kenney/input/c_down.png" alt="" style="--rot:-45deg"></i>
         </div>
         <div class="arrows">
           <img class="up" src="kenney/input/c_up.png" alt=""><img class="left" src="kenney/input/c_left.png" alt="">

@@ -4,7 +4,7 @@ const SHELL = ['./', 'index.html', 'style.css', 'manifest.json', 'icons/icon.svg
   'src/web.js', 'src/engine.js', 'src/vm.js', 'src/video.js', 'src/resource.js', 'src/bank.js',
   'src/mixer.js', 'src/tables.js', 'src/storage.js', 'src/zip.js', 'src/i18n.js', 'i18n/languages.json',
   'i18n/en.json', 'i18n/it.json', 'i18n/fr.json', 'i18n/de.json', 'i18n/es.json', 'i18n/pt.json', 'i18n/nl.json', 'i18n/pl.json', 'i18n/ru.json', 'i18n/tr.json', 'i18n/ja.json', 'i18n/ko.json', 'i18n/zh.json',
-  'kenney/fonts/kenney-pixel.ttf', 'kenney/input/c_button-a.png', 'kenney/input/c_stick.png',
+  'kenney/fonts/kenney-pixel.ttf', 'kenney/input/c_button-a.png',
   'kenney/input/c_menu.png', 'kenney/input/c_pause.png', 'assets/splash.jpg'];
 
 self.addEventListener('install', (e) => {

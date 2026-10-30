@@ -27,13 +27,7 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
 .arrows img { width: var(--btn); height: var(--btn); image-rendering: pixelated; opacity: .92; pointer-events: none; transition: transform .04s; }
 .arrows .up { grid-area: 1 / 2; } .arrows .left { grid-area: 2 / 1; } .arrows .right { grid-area: 2 / 3; } .arrows .down { grid-area: 3 / 2; }
 #pad.up img.up, #pad.down img.down, #pad.left img.left, #pad.right img.right { opacity: 1; transform: scale(.88); }
-.dpad { display: none; }
-/* Landscape: floating stick, only the knob is drawn; it follows the thumb within a 3-button wide area */
-.dpad { position: relative; width: calc(3 * var(--btn)); height: calc(3 * var(--btn)); }
-.dpad img { position: absolute; image-rendering: pixelated; pointer-events: none; }
-.dpad .knob { left: 50%; top: 50%; width: var(--btn); height: var(--btn); margin: calc(var(--btn) / -2) 0 0 calc(var(--btn) / -2);
-  opacity: .92; transform: translate(var(--kx, 0px), var(--ky, 0px)); }
-#pad.on .knob { opacity: 1; }
+.grid { display: none; }
 /* The element is the touch target; the sprite is its ::after so the target can be much bigger than the drawing */
 #action { position: relative; width: var(--btn); height: var(--btn); padding: 0; border: 0; background: none; touch-action: none; }
 #action::after { content: ""; position: absolute; width: var(--btn); height: var(--btn); left: 50%; top: 0; transform: translateX(-50%);
@@ -62,8 +56,13 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
   /* Controls in the lower part of the bands, centred in them */
   #app.touch #pad { grid-area: pad; justify-self: stretch; align-self: stretch; }
   #app.touch .arrows { display: none; }
-  #app.touch .dpad { display: block; }
-  #app.touch .dpad { margin: calc(72vh - 1.5 * var(--btn)) auto 0; }
+  /* 3x3 touch grid filling the band (below the pause button); the centre cell is neutral, every other cell is a direction */
+  #app.touch .grid { display: grid; grid: repeat(3, 1fr) / repeat(3, 1fr); position: absolute; left: 0; right: 0;
+    top: calc(var(--btn) + 16px); bottom: 4vh; }
+  .grid i { display: flex; align-items: center; justify-content: center; }
+  .grid img { width: var(--btn); height: var(--btn); image-rendering: pixelated; pointer-events: none; opacity: .75;
+    transform: rotate(var(--rot, 0deg)); transition: transform .04s; }
+  .grid i.hit img { opacity: 1; transform: rotate(var(--rot, 0deg)) scale(.88); }
   /* The whole right band is the A button, so no precision is needed: only the sprite is drawn small */
   #app.touch #action { grid-area: action; justify-self: stretch; align-self: stretch; width: auto; height: auto; }
   #app.touch #action::after { top: calc(74vh - .5 * var(--btn)); }

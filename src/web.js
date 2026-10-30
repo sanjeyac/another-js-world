@@ -297,75 +297,52 @@ kbd.addEventListener('keydown', (e) => { if (e.key === 'Enter') { kbButton = tru
 let touchMask = 0;
 let touchButton = false;
 
-// Floating joystick: the whole left band is the touch zone, the origin is where the thumb lands and the drawn d-pad
-// moves there. Direction = angle of the drag: horizontal wins over vertical (running), diagonals are wide sectors.
+// Landscape: the left band is a 3x3 grid (8 directions, neutral centre); the thumb can slide between cells.
+// Portrait: four fixed arrows, direction from the touch position relative to their centre.
 const pad = $('pad');
-const dpad = pad.querySelector('.dpad');
-let padPointer = -1, padOx = 0, padOy = 0, padRestX = 0, padRestY = 0;
-
-function padPlace() {
-  dpad.style.transform = `translate(${padOx - padRestX}px, ${padOy - padRestY}px)`;
-}
+const grid = pad.querySelector('.grid');
+const gridCells = [...grid.children];
 const landscape = matchMedia('(orientation: landscape)');
 const DIRS = [['left', DIR_LEFT], ['right', DIR_RIGHT], ['up', DIR_UP], ['down', DIR_DOWN]];
-function padSetMask(m) {
+let padPointer = -1;
+
+function padSetMask(m, cell = -1) {
   if (m !== touchMask) navigator.vibrate?.(6);
   touchMask = m;
   for (const [cls, bit] of DIRS) pad.classList.toggle(cls, !!(m & bit));
-}
-
-// Portrait: four fixed arrows, direction from the touch position relative to their centre
-function padUpdateFixed(e) {
-  const r = pad.querySelector('.arrows').getBoundingClientRect();
-  const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-  const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-  let m = 0;
-  if (dx < -0.3) m |= DIR_LEFT;
-  if (dx > 0.3) m |= DIR_RIGHT;
-  if (dy < -0.3) m |= DIR_UP;
-  if (dy > 0.3) m |= DIR_DOWN;
-  padSetMask(m);
+  gridCells.forEach((el, i) => el.classList.toggle('hit', i === cell));
 }
 
 function padUpdate(e) {
-  if (!landscape.matches) return padUpdateFixed(e);
-  const btn = dpad.querySelector('.knob').getBoundingClientRect().width || 40;
-  let dx = e.clientX - padOx, dy = e.clientY - padOy;
-  const dist = Math.hypot(dx, dy);
-  const maxR = btn * 1.5; // max drag radius: 1.5 buttons
-  if (dist > maxR) { // the thumb went far: drag the origin along so reversing direction stays quick
-    padOx += dx * (1 - maxR / dist); padOy += dy * (1 - maxR / dist);
-    dx = e.clientX - padOx; dy = e.clientY - padOy;
-    padPlace();
+  let m = 0, cell = -1;
+  if (landscape.matches) {
+    const r = grid.getBoundingClientRect();
+    // touches outside the grid (above/below it in the band) count as the nearest cell
+    const col = Math.min(2, Math.max(0, Math.floor((e.clientX - r.left) / r.width * 3)));
+    const row = Math.min(2, Math.max(0, Math.floor((e.clientY - r.top) / r.height * 3)));
+    if (col === 0) m |= DIR_LEFT; else if (col === 2) m |= DIR_RIGHT;
+    if (row === 0) m |= DIR_UP; else if (row === 2) m |= DIR_DOWN;
+    cell = row * 3 + col;
+  } else {
+    const r = pad.querySelector('.arrows').getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+    const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+    if (dx < -0.3) m |= DIR_LEFT;
+    if (dx > 0.3) m |= DIR_RIGHT;
+    if (dy < -0.3) m |= DIR_UP;
+    if (dy > 0.3) m |= DIR_DOWN;
   }
-  dpad.style.setProperty('--kx', dx + 'px'); dpad.style.setProperty('--ky', dy + 'px');
-  let m = 0;
-  const d = Math.hypot(dx, dy);
-  if (d > btn * 0.4) {
-    if (Math.abs(dx) / d > 0.35) m |= dx < 0 ? DIR_LEFT : DIR_RIGHT;
-    if (Math.abs(dy) / d > 0.5) m |= dy < 0 ? DIR_UP : DIR_DOWN;
-  }
-  padSetMask(m);
+  padSetMask(m, cell);
 }
 function padRelease(e) {
   if (e && e.pointerId !== padPointer) return;
   padPointer = -1;
-  touchMask = 0;
-  pad.classList.remove('left', 'right', 'up', 'down');
-  dpad.style.transform = '';
-  dpad.style.removeProperty('--kx'); dpad.style.removeProperty('--ky');
-  pad.classList.remove('on');
+  padSetMask(0);
 }
 pad.addEventListener('pointerdown', (e) => {
   if (padPointer !== -1) return;
   padPointer = e.pointerId;
-  pad.classList.add('on');
   pad.setPointerCapture(e.pointerId);
-  dpad.style.transform = '';
-  const r = dpad.getBoundingClientRect(); // zero-sized in portrait, where the arrows are used
-  padRestX = r.left + r.width / 2; padRestY = r.top + r.height / 2;
-  padOx = e.clientX; padOy = e.clientY;
-  padPlace();
   padUpdate(e);
   e.preventDefault();
 });
