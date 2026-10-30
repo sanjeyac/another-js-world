@@ -1,0 +1,103 @@
+@font-face { font-family: "Kenney Pixel"; src: url("kenney/fonts/kenney-pixel.ttf") format("truetype"); font-display: block; }
+:root { --bg: #000; --fg: #f2f2fa; --accent: #6aa3d8; --panel: #111a33; --danger: #ff8a80;
+  --px: 4px; /* one "game pixel" of the UI */
+  --notch: polygon(0 var(--px), var(--px) var(--px), var(--px) 0, calc(100% - var(--px)) 0, calc(100% - var(--px)) var(--px), 100% var(--px),
+    100% calc(100% - var(--px)), calc(100% - var(--px)) calc(100% - var(--px)), calc(100% - var(--px)) 100%, var(--px) 100%,
+    var(--px) calc(100% - var(--px)), 0 calc(100% - var(--px))); }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden;
+  font: 22px/1.25 "Kenney Pixel", system-ui, "Noto Sans CJK SC", "Noto Sans", sans-serif; -webkit-font-smoothing: none; font-smooth: never; overscroll-behavior: none; }
+body { -webkit-user-select: none; user-select: none; touch-action: none; }
+[hidden] { display: none !important; }
+
+#app { position: fixed; inset: 0; display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+
+#screen { position: relative; flex: 0 0 auto; width: 100%; aspect-ratio: 16 / 10; max-height: 100%; margin: 0 auto; }
+#canvas { width: 100%; height: 100%; display: block; background: #000; image-rendering: pixelated; object-fit: contain; }
+.chip { position: absolute; top: 6px; right: 6px; width: 48px; height: 48px; padding: 0; border: 0; opacity: .7;
+  background: url("kenney/input/menu.png") center / 100% 100% no-repeat; image-rendering: pixelated; font-size: 0; }
+
+#controls { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: space-around; min-height: 0; }
+.sprite { image-rendering: pixelated; }
+#pad { position: relative; width: min(46vw, 210px); width: round(down, min(46vw, 210px), 16px); aspect-ratio: 1; touch-action: none;
+  opacity: .85; }
+#pad img { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; pointer-events: none; }
+#pad img.lit { display: none; }
+/* a pressed direction fills its half of the cross arm */
+#pad .lit.up { clip-path: inset(0 31% 50% 31%); } #pad .lit.down { clip-path: inset(50% 31% 0 31%); }
+#pad .lit.left { clip-path: inset(31% 50% 31% 0); } #pad .lit.right { clip-path: inset(31% 0 31% 50%); }
+#pad.up .lit.up, #pad.down .lit.down, #pad.left .lit.left, #pad.right .lit.right { display: block; }
+#action { width: min(30vw, 130px); width: round(down, min(30vw, 130px), 16px); aspect-ratio: 1; padding: 0; border: 0;
+  background: url("kenney/input/button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; touch-action: none; opacity: .85; }
+#action.down { background-image: url("kenney/input/button-a-pressed.png"); }
+
+/* Touch devices in landscape (PSP style): screen in the middle, controls on the black bands at the sides */
+@media (orientation: landscape) {
+  #app.touch { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "pad screen action";
+    align-items: center; }
+  #app.touch #controls { display: contents; }
+  #app.touch #screen { grid-area: screen; height: 100%; width: auto; aspect-ratio: 16 / 10; max-width: 100%; position: static; }
+  #app.touch #pad { grid-area: pad; justify-self: center; width: clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh); width: round(down, clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh), 16px); }
+  #app.touch #action { grid-area: action; justify-self: center; width: clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh); width: round(down, clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh), 16px); }
+  #app.touch #menu-btn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
+}
+
+.overlay { position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.95); padding: 16px; overflow: auto; touch-action: pan-y; }
+.card { width: min(100%, 440px); display: flex; flex-direction: column; gap: 12px; text-align: center; margin: auto; }
+h1, h2 { margin: 0; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; }
+h1 { font-size: 40px; } h2 { font-size: 32px; margin-bottom: 4px; }
+.sub, .hint, .status { margin: 0; opacity: .75; font-size: 20px; }
+.status { min-height: 1.3em; } .status.err { color: var(--danger); opacity: 1; }
+code { background: #26335a; padding: 0 6px; font: inherit; }
+
+.btn { display: block; padding: 10px 16px; border: 0; color: var(--fg); background: var(--panel); font: inherit;
+  box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); cursor: pointer; text-align: center; }
+.btn:active { background: #26335a; transform: translateY(2px); }
+.btn.primary { background: var(--accent); color: #05121f; box-shadow: inset 0 0 0 var(--px) #fff; }
+.btn.primary:active { background: #8fbbe6; }
+.btn.danger { color: var(--danger); box-shadow: inset 0 0 0 var(--px) var(--danger); }
+.row { display: flex; gap: 8px; align-items: center; } .row span { flex: 0 0 auto; min-width: 84px; text-align: left; }
+.row .btn { flex: 1; }
+#error-text { white-space: pre-wrap; text-align: left; font-size: 16px; max-height: 40vh; overflow: auto; }
+#kbd { position: fixed; left: -100px; top: 0; width: 10px; height: 10px; opacity: 0; font-size: 16px; }
+
+#toast { position: fixed; left: 50%; bottom: 14%; transform: translate(-50%, 10px); padding: 8px 18px; background: var(--panel);
+  box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); color: #fff; opacity: 0; pointer-events: none; transition: .2s; z-index: 20; }
+#toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+.split { display: flex; gap: 12px; } .split .btn { flex: 1 1 0; }
+select.btn { appearance: none; -webkit-appearance: none; text-align-last: center; }
+select.btn option { background: #111a33; color: #fff; }
+.row.lang { grid-column: auto; }
+
+/* The pixel font only covers Latin: use the system font for the other scripts so text and digits stay consistent */
+html:lang(ru), html:lang(ja), html:lang(ko), html:lang(zh) { font-family: system-ui, "Noto Sans CJK SC", "Noto Sans", sans-serif; font-size: 19px; }
+
+/* Splash artwork behind the first screens (file picker, tap to play) */
+.overlay.splash { background: #000 url("assets/splash.jpg") center / cover no-repeat; align-items: flex-end; }
+.overlay.splash::before { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.8)); pointer-events: none; }
+.overlay.splash .card { position: relative; margin-bottom: max(8px, env(safe-area-inset-bottom)); }
+.card.panel { background: rgba(5, 8, 20, .88); padding: 14px; box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); }
+.overlay.splash .hint { text-shadow: 0 2px 0 #000; opacity: 1; }
+@media (orientation: portrait) {
+  .overlay.splash { background-size: 100% auto; background-position: top center; align-items: flex-end; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .overlay.splash { background-size: contain; background-position: top center; padding: 8px; }
+  .overlay.splash .card { flex-direction: row; align-items: center; width: min(100%, 740px); gap: 12px; }
+  .overlay.splash .card.panel { padding: 10px 14px; }
+  .overlay.splash .card p { font-size: 17px; line-height: 1.2; flex: 1; }
+  .overlay.splash .card > .btn { flex: 0 0 38%; }
+  .overlay.splash .card .split { flex: 1; }
+  .overlay.splash .card .hint { display: none; }
+}
+
+/* Short screens (landscape phones): lay the menu out in two columns */
+@media (max-height: 520px) {
+  .overlay .card:has(.row) { display: grid; grid-template-columns: 1fr 1fr; width: min(100%, 680px); gap: 8px; }
+  .overlay .card:has(.row) > h2, .overlay .card:has(.row) > .btn.primary, .overlay .card:has(.row) > .status { grid-column: 1 / -1; }
+  .overlay .card:has(.row) .btn { padding: 6px 10px; }
+}

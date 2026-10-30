@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Another World</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="screen">
+      <canvas id="canvas" width="320" height="200"></canvas>
+      <button id="menu-btn" class="chip" aria-label="Menu" data-i18n-aria="aria.menu"></button>
+    </div>
+
+    <div id="controls" hidden>
+      <div id="pad" aria-label="Directions" data-i18n-aria="aria.pad">
+        <img src="kenney/input/dpad.png" alt="">
+        <img class="lit up" src="kenney/input/dpad-filled.png" alt=""><img class="lit down" src="kenney/input/dpad-filled.png" alt="">
+        <img class="lit left" src="kenney/input/dpad-filled.png" alt=""><img class="lit right" src="kenney/input/dpad-filled.png" alt="">
+      </div>
+      <button id="action" aria-label="Action" data-i18n-aria="aria.action"></button>
+    </div>
+
+    <!-- First run: pick the original game files -->
+    <section id="setup" class="overlay splash">
+      <div class="card panel">
+        <p id="setup-msg" data-i18n-html="setup.text">This project does not include the game files. Select a <code>.zip</code>
+          with the data of your original copy (DOS version): <code>memlist.bin</code> and <code>bank01</code> … <code>bank0d</code>.
+          They stay on your device and are never uploaded.</p>
+        <label class="btn primary" for="file-input" data-i18n="setup.button">Select the game zip</label>
+        <input id="file-input" type="file" accept=".zip,application/zip,application/x-zip-compressed" multiple hidden>
+        <p id="setup-status" class="status"></p>
+      </div>
+    </section>
+
+    <!-- Needed to start audio on mobile -->
+    <section id="start" class="overlay splash" hidden>
+      <div class="card">
+        <div class="split">
+          <button id="start-btn" class="btn primary" data-i18n="start.play">Tap to play</button>
+          <button id="start-fs" class="btn" data-act="fullscreen" data-i18n="start.fullscreen">Fullscreen</button>
+        </div>
+        <p class="hint" data-i18n="start.hint">Landscape recommended</p>
+      </div>
+    </section>
+
+    <section id="menu" class="overlay" hidden>
+      <div class="card">
+        <h2 data-i18n="menu.title">Paused</h2>
+        <button class="btn primary" data-act="resume" data-i18n="menu.resume">Resume</button>
+        <div class="row"><span data-i18n="menu.save">Save</span>
+          <button class="btn" data-act="save" data-slot="1">1</button>
+          <button class="btn" data-act="save" data-slot="2">2</button>
+          <button class="btn" data-act="save" data-slot="3">3</button></div>
+        <div class="row"><span data-i18n="menu.load">Load</span>
+          <button class="btn" data-act="load" data-slot="1">1</button>
+          <button class="btn" data-act="load" data-slot="2">2</button>
+          <button class="btn" data-act="load" data-slot="3">3</button></div>
+        <button class="btn" data-act="code" data-i18n="menu.code">Enter code (password)</button>
+        <button class="btn" data-act="mute"><span data-i18n="menu.audio">Audio</span>: <b id="mute-state"></b></button>
+        <button class="btn" data-act="fullscreen" data-i18n="menu.fullscreen">Fullscreen</button>
+        <button class="btn" data-act="restart" data-i18n="menu.restart">Restart from intro</button>
+        <label class="row lang"><span data-i18n="menu.language">Language</span><select id="lang-select" class="btn"></select></label>
+        <button class="btn danger" data-act="forget" data-i18n="menu.forget">Remove game files</button>
+        <p id="menu-msg" class="status"></p>
+      </div>
+    </section>
+
+    <section id="error" class="overlay" hidden>
+      <div class="card"><h2 data-i18n="error.title">Error</h2><pre id="error-text"></pre>
+        <button class="btn" onclick="location.reload()" data-i18n="error.reload">Reload</button></div>
+    </section>
+
+    <input id="kbd" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-hidden="true" tabindex="-1">
+  </div>
+  <script type="module" src="src/web.js"></script>
+</body>
+</html>

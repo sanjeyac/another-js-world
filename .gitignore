@@ -1,0 +1,6 @@
+# Original game data is copyrighted: never commit it (the folder itself is kept).
+game/*
+!game/.gitkeep
+dos/
+data/
+node_modules/
