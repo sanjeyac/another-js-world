@@ -31,5 +31,6 @@
   "zip.unsupported": "不支持的 zip 压缩方式",
   "aria.menu": "菜单",
   "aria.pad": "方向",
-  "aria.action": "动作"
+  "aria.action": "动作",
+  "aria.pause": "暂停"
 }

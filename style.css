@@ -32,6 +32,11 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
   background: url("kenney/input/button-a.png") center / 100% 100% no-repeat; image-rendering: pixelated; touch-action: none; opacity: .85; }
 #action.down { background-image: url("kenney/input/button-a-pressed.png"); }
 
+#pause-btn { right: auto; left: 6px; background-image: url("kenney/input/pause.png"); }
+#pause-btn.on { background-image: url("kenney/input/play.png"); opacity: 1; }
+.panel-label { position: absolute; left: 50%; top: 14%; transform: translateX(-50%); z-index: 5; padding: 6px 22px; background: var(--panel);
+  box-shadow: inset 0 0 0 var(--px) #fff; clip-path: var(--notch); text-transform: uppercase; letter-spacing: .1em; pointer-events: none; }
+
 /* Touch devices in landscape (PSP style): screen in the middle, controls on the black bands at the sides */
 @media (orientation: landscape) {
   #app.touch { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "pad screen action";
@@ -41,6 +46,7 @@ body { -webkit-user-select: none; user-select: none; touch-action: none; }
   #app.touch #pad { grid-area: pad; justify-self: center; width: clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh); width: round(down, clamp(80px, calc((100vw - 160vh) / 2 - 8px), 36vh), 16px); }
   #app.touch #action { grid-area: action; justify-self: center; width: clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh); width: round(down, clamp(64px, calc((100vw - 160vh) / 2 - 12px), 26vh), 16px); }
   #app.touch #menu-btn { top: max(6px, env(safe-area-inset-top)); right: max(6px, env(safe-area-inset-right)); }
+  #app.touch #pause-btn { top: max(6px, env(safe-area-inset-top)); left: max(6px, env(safe-area-inset-left)); }
 }
 
 .overlay { position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;

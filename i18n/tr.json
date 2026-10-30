@@ -31,5 +31,6 @@
   "zip.unsupported": "Desteklenmeyen zip sıkıştırması",
   "aria.menu": "Menü",
   "aria.pad": "Yönler",
-  "aria.action": "Eylem"
+  "aria.action": "Eylem",
+  "aria.pause": "Duraklat"
 }

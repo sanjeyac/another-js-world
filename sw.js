@@ -1,12 +1,12 @@
 // Offline cache for the app shell only (the game data never leaves the user's IndexedDB).
-const CACHE = 'another-world-v4';
+const CACHE = 'another-world-v5';
 const SHELL = ['./', 'index.html', 'style.css', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
   'src/web.js', 'src/engine.js', 'src/vm.js', 'src/video.js', 'src/resource.js', 'src/bank.js',
   'src/mixer.js', 'src/tables.js', 'src/storage.js', 'src/zip.js', 'src/i18n.js', 'i18n/languages.json',
   'i18n/en.json', 'i18n/it.json', 'i18n/fr.json', 'i18n/de.json', 'i18n/es.json', 'i18n/pt.json', 'i18n/nl.json', 'i18n/pl.json', 'i18n/ru.json', 'i18n/tr.json', 'i18n/ja.json', 'i18n/ko.json', 'i18n/zh.json',
   'kenney/fonts/kenney-pixel.ttf', 'kenney/input/dpad.png', 'kenney/input/dpad-filled.png',
   'kenney/input/button-a.png', 'kenney/input/button-a-pressed.png',
-  'kenney/input/menu.png', 'assets/splash.jpg'];
+  'kenney/input/menu.png', 'kenney/input/pause.png', 'kenney/input/play.png', 'assets/splash.jpg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

@@ -31,5 +31,6 @@
   "zip.unsupported": "Compresión zip no compatible",
   "aria.menu": "Menú",
   "aria.pad": "Direcciones",
-  "aria.action": "Acción"
+  "aria.action": "Acción",
+  "aria.pause": "Pausa"
 }

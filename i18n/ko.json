@@ -31,5 +31,6 @@
   "zip.unsupported": "지원하지 않는 zip 압축 방식입니다",
   "aria.menu": "메뉴",
   "aria.pad": "방향",
-  "aria.action": "동작"
+  "aria.action": "동작",
+  "aria.pause": "일시정지"
 }

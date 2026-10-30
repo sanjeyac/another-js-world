@@ -31,5 +31,6 @@
   "zip.unsupported": "Niet-ondersteunde zip-compressie",
   "aria.menu": "Menu",
   "aria.pad": "Richtingen",
-  "aria.action": "Actie"
+  "aria.action": "Actie",
+  "aria.pause": "Pauze"
 }

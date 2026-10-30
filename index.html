@@ -16,8 +16,11 @@
   <div id="app">
     <div id="screen">
       <canvas id="canvas" width="320" height="200"></canvas>
+      <button id="pause-btn" class="chip" aria-label="Pause" data-i18n-aria="aria.pause"></button>
       <button id="menu-btn" class="chip" aria-label="Menu" data-i18n-aria="aria.menu"></button>
     </div>
+
+    <div id="pause-label" class="panel-label" hidden data-i18n="menu.title">Paused</div>
 
     <div id="controls" hidden>
       <div id="pad" aria-label="Directions" data-i18n-aria="aria.pad">

@@ -31,5 +31,6 @@
   "zip.unsupported": "未対応のzip圧縮方式です",
   "aria.menu": "メニュー",
   "aria.pad": "方向",
-  "aria.action": "アクション"
+  "aria.action": "アクション",
+  "aria.pause": "一時停止"
 }

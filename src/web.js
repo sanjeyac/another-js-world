@@ -153,13 +153,24 @@ function startGame() {
 
 function resume() {
   show('menu', false);
+  show('pause-label', false);
+  $('pause-btn').classList.remove('on');
   paused = false;
   lastShown = performance.now();
   dueAt = lastShown;
   if (audio) audio.ctx.resume();
 }
 
+/** Quick pause (top-left button): freezes the game without opening the menu. */
+function quickPause() {
+  paused = true;
+  show('pause-label', true);
+  $('pause-btn').classList.add('on');
+}
+
 function pause() {
+  show('pause-label', false);
+  $('pause-btn').classList.remove('on');
   paused = true;
   show('menu', true);
   $('menu-msg').textContent = '';
@@ -226,7 +237,10 @@ const KEY_BUTTONS = new Set(['Space', 'Enter', 'NumpadEnter', 'KeyZ', 'KeyX', 'C
 window.addEventListener('keydown', (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   if (e.code === 'Escape' || (e.code === 'KeyP' && !inPasswordScreen())) {
-    if (engine && $('error').hidden) { paused ? resume() : pause(); e.preventDefault(); }
+    if (engine && $('error').hidden) {
+      if (e.code === 'KeyP' && $('menu').hidden) { paused ? resume() : quickPause(); } else { paused ? resume() : pause(); }
+      e.preventDefault();
+    }
     return;
   }
   if (paused || !engine || e.target === kbd) return; // the soft keyboard input handles its own typing
@@ -290,6 +304,11 @@ for (const t of ['pointerup', 'pointercancel', 'lostpointercapture']) action.add
 
 window.addEventListener('contextmenu', (e) => e.preventDefault());
 $('menu-btn').addEventListener('click', () => { if (engine) pause(); });
+$('pause-btn').addEventListener('click', () => {
+  if (!engine || !$('error').hidden) return;
+  if (!paused) quickPause();
+  else if ($('menu').hidden) resume();
+});
 
 if (matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) { $('controls').hidden = false; $('app').classList.add('touch'); }
 else $('app').classList.add('desktop');

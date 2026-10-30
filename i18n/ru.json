@@ -31,5 +31,6 @@
   "zip.unsupported": "Неподдерживаемое сжатие zip",
   "aria.menu": "Меню",
   "aria.pad": "Направления",
-  "aria.action": "Действие"
+  "aria.action": "Действие",
+  "aria.pause": "Пауза"
 }
