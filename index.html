@@ -24,9 +24,15 @@
     <div id="pause-label" class="panel-label" hidden data-i18n="menu.title">Paused</div>
 
     <div id="controls" hidden>
+      <!-- Landscape: #pad is the whole left band and .dpad (the stick sprite) follows the thumb. Portrait: fixed .arrows -->
       <div id="pad" aria-label="Directions" data-i18n-aria="aria.pad">
-        <img class="up" src="kenney/input/c_up.png" alt=""><img class="left" src="kenney/input/c_left.png" alt="">
-        <img class="right" src="kenney/input/c_right.png" alt=""><img class="down" src="kenney/input/c_down.png" alt="">
+        <div class="dpad">
+          <img class="knob" src="kenney/input/c_stick.png" alt="">
+        </div>
+        <div class="arrows">
+          <img class="up" src="kenney/input/c_up.png" alt=""><img class="left" src="kenney/input/c_left.png" alt="">
+          <img class="right" src="kenney/input/c_right.png" alt=""><img class="down" src="kenney/input/c_down.png" alt="">
+        </div>
       </div>
       <button id="action" aria-label="Action" data-i18n-aria="aria.action"></button>
     </div>

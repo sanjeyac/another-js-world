@@ -67,7 +67,8 @@ a real or headless Chromium with mobile emulation (touch, 844×390 landscape and
 - UI look: pixel borders via `--px` and the `--notch` clip-path, Kenney 1-bit sprites rendered with
   `image-rendering: pixelated`. Reuse these instead of inventing new styles.
 - Touch layout: in landscape the screen takes 80% of the height and the controls sit on the black side bands (CSS grid
-  on `#app.touch`): four separate 40 px d-pad buttons (`kenney/input/c_*.png`, `--btn`) and the A button, placed like the
+  on `#app.touch`): a floating joystick (the whole left band is the touch zone `#pad`, the `.dpad` — a 40 px stick sprite, `kenney/input/c_stick.png`, that moves inside a 3-button wide area — follows the thumb;
+  direction comes from the drag angle in `padUpdate`) and the A button (whole right band), placed like the
   reference mock-up (lower part of the bands). On narrow phones `--btn` shrinks before the screen does. In portrait the
   controls go below the screen with larger buttons. Keep the top-left pause button and top-right menu button on the bands.
 - **New runtime file ⇒ update `sw.js`** (`SHELL` list, bump the cache name only if needed: the build stamps it) and,
